@@ -8,7 +8,9 @@ gemfile:
   - gemfiles/rails40_mysql.gemfile
   - gemfiles/rails40_sqlite.gemfile
   - gemfiles/rails40.gemfile
-before_install: bundle install
+before_install:
+  - gem update bundler
+  - bundle install
 bundler_args:
 before_script:
   - psql -c 'create database dar_test;' -U postgres
