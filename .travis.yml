@@ -11,5 +11,5 @@ gemfile:
 before_install: bundle install
 bundler_args:
 before_script:
-  - psql -c 'create database fuzzily_test;' -U postgres
-  - mysql -e 'create database fuzzily_test;'
+  - psql -c 'create database dar_test;' -U postgres
+  - mysql -e 'create database dar_test;'
