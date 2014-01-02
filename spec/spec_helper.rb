@@ -11,7 +11,7 @@ require 'active_record'
 DATABASE = Pathname.new 'test.sqlite3'
 
 def get_connection_hash
-  case ENV.fetch('DAR_ADAPTER', 'sqlite3')
+  case ENV.fetch('DAR_ADAPTER', 'sqlite3mem')
   when 'postgresql'
     {
       :adapter      => 'postgresql',
@@ -31,6 +31,11 @@ def get_connection_hash
     {
       :adapter      => 'sqlite3',
       :database     => DATABASE.to_s
+    }
+  when 'sqlite3mem'
+    {
+      :adapter      => 'sqlite3',
+      :database     => ':memory:'
     }
   end
 end
