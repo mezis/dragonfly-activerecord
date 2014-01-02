@@ -15,7 +15,7 @@ def get_connection_hash
   when 'postgresql'
     {
       :adapter      => 'postgresql',
-      :database     => 'fuzzily_test',
+      :database     => 'dar_test',
       :host         => 'localhost',
       :min_messages => 'warning',
       :username     => ENV['DAR_DB_USER']
@@ -23,7 +23,7 @@ def get_connection_hash
   when 'mysql'
     {
       :adapter      => 'mysql2',
-      :database     => 'fuzzily_test',
+      :database     => 'dar_test',
       :host         => 'localhost',
       :username     => ENV['DAR_DB_USER']
     }
@@ -61,12 +61,15 @@ RSpec.configure do |config|
     # Connect to & cleanup test database
     ActiveRecord::Base.establish_connection(get_connection_hash)
 
+    %w(storage_files storage_chunks).each do |table_name|
+      ActiveRecord::Base.connection.execute "DROP TABLE IF EXISTS #{table_name};"
+    end
+
     def prepare_database
       silence_stream(STDOUT) do
         TestMigration.new.up
       end
     end
-
   end
 
   config.after(:each) do
