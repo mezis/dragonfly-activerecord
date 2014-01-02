@@ -1,24 +1,58 @@
-# Dragonfly::Ar::Store
+# dragonfly-activerecord
 
-TODO: Write a gem description
+Provides a data store for [Dragonfly](https://github.com/markevans/dragonfly),
+backed by ActiveRecord.
+
+Requires a Rails application using Dragonfly 1.0+.
+
+
+## Why?
+
+Because there's a fat chance our app already has a database. Why bother with S3
+when your DB can do the job just fine?
+
+Yes, storing files in a relational database may be a bad idea at scale, but for
+many use cases (up to a few gigabytes of storage) it really eases the
+maintenance burden.
+
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'dragonfly-ar-store'
+    gem 'dragonfly-activerecord'
 
-And then execute:
+Create a migration:
 
-    $ bundle
+    $ rails generate migration add_dragonfly_storage
 
-Or install it yourself as:
+Edit the migration file:
 
-    $ gem install dragonfly-ar-store
+```ruby
+require 'dragonfly-activerecord/migration'
 
-## Usage
+class AddDragonflyStorage < ActiveRecord::Migration
+  include Dragonfly::ActiveRecord::Migration
+end
+```
 
-TODO: Write usage instructions here
+Run the migration:
+
+    $ rake db:migrate
+
+Configure Dragonfly itself (in `config/initializers/dragonfly.rb`, typically):
+
+```ruby
+require 'dragonfly-activerecord/store'
+
+Dragonfly.app.configure do
+  # ... your existing configuration here
+  datastore Storage::DataStore.new
+end
+```
+
+... and you're good to go!
+
 
 ## Contributing
 
