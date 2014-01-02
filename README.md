@@ -1,5 +1,10 @@
 # dragonfly-activerecord
 
+[![Gem Version](https://badge.fury.io/rb/dragonfly-activerecord.png)](http://badge.fury.io/rb/dragonfly-activerecord)
+[![Build Status](https://travis-ci.org/mezis/dragonfly-activerecord.png?branch=master)](https://travis-ci.org/mezis/dragonfly-activerecord)
+[![Dependency Status](https://gemnasium.com/mezis/dragonfly-activerecord.png)](https://gemnasium.com/mezis/dragonfly-activerecord)
+[![Code Climate](https://codeclimate.com/github/mezis/dragonfly-activerecord.png)](https://codeclimate.com/github/mezis/dragonfly-activerecord)
+
 Provides a data store for [Dragonfly](https://github.com/markevans/dragonfly),
 backed by ActiveRecord.
 
