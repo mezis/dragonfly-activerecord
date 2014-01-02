@@ -1,11 +1,13 @@
 require 'spec_helper'
 require 'dragonfly-activerecord/store.rb'
 
-describe Storage::DataStore do
+describe Dragonfly::ActiveRecord::Store do
   FakeFile = Struct.new(:data, :meta)
 
   let(:fake_file) { FakeFile.new data, metadata }
   let(:metadata) { {a:1} }
+
+  before { prepare_database }
 
   share_examples_for 'store and retrieve' do
     it 'retrieves the data' do

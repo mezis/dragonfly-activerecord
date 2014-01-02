@@ -10,8 +10,12 @@ module Dragonfly::ActiveRecord
 
     serialize :metadata
     validates_presence_of :metadata
-    default_value_for(:metadata) { Hash.new }
-    default_value_for(:accessed_at) { Time.current }
+    validates_presence_of :accessed_at
+
+    before_validation :set_defaults
+
+    # default_value_for(:metadata) { Hash.new }
+    # default_value_for(:accessed_at) { Time.current }
 
     # BLOB is typically 65k maximum, but in our case
     # there's a 4/3 overhead for Base64 encoding, and up to 1% overhead
@@ -28,6 +32,13 @@ module Dragonfly::ActiveRecord
 
     def data
       self.chunks.order(:idx).map(&:data).join
+    end
+
+    private
+
+    def set_defaults
+      self.metadata    ||= Hash.new
+      self.accessed_at ||= Time.current
     end
   end
 end

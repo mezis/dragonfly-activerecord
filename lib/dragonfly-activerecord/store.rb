@@ -11,8 +11,6 @@ module Dragonfly::ActiveRecord
         file = File.create!(metadata: temp_object.meta)
         file.data = temp_object.data
         file.save!
-
-        Rails.logger.info "created #{file.reload.chunks.count} chunks"
         return file.id.to_s
       end
     end
