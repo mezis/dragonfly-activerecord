@@ -11,15 +11,15 @@ backed by ActiveRecord.
 Requires a Rails application using Dragonfly 1.0+.
 
 
-## Why?
+## Use case
 
-Because there's a fat chance our app already has a database. Why bother with S3
-when your DB can do the job just fine?
+If your app's dynamic assets (user uploaded images for instance) weigh up to a
+few gigabytes, it can make sense to store them in the app's database instead of
+another service (e.g. Amazon's S3): your stack has one less dependency to care
+about, and backups get more complicated.
 
-Yes, storing files in a relational database may be a bad idea at scale, but for
-many use cases (up to a few gigabytes of storage) it really eases the
-maintenance burden.
-
+`dragonfly-activerecord`, lets you store assets to your app's relational
+database.
 
 ## Installation
 
