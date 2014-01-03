@@ -10,6 +10,8 @@ backed by ActiveRecord.
 
 Requires a Rails application using Dragonfly 1.0+.
 
+Tested with MRI 1.9.3, 2.0, 2.1; ActiveRecord 3.2 and 4.0; and MySQL,
+PostgreSQL, and SQLite stores.
 
 ## Use case
 
