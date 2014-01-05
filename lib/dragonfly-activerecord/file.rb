@@ -26,8 +26,12 @@ module Dragonfly::ActiveRecord
 
     def data
       @_output ||= Tempfile.new('dar', encoding: 'binary').tap do |fd|
-        chunks.order(:ids).find_each(batch_size: 10) do |chunk|
+        index = 0
+        while true
+          chunk = chunks.where(idx:index).first
+          break if chunk.nil?
           fd.write(chunk.data)
+          index += 1
         end
         fd.rewind
       end
