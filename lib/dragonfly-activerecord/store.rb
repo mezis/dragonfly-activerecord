@@ -7,11 +7,13 @@ module Dragonfly::ActiveRecord
 
     # +temp_object+ should respond to +data+ and +meta+
     def write(temp_object, opts={})
-      File.new.tap do |file|
-        file.metadata = temp_object.meta
-        file.data     = temp_object.data
-        file.save!
-        return file.id.to_s
+      temp_object.file do |fd|
+        File.new.tap do |file|
+          file.metadata = temp_object.meta
+          file.data     = fd
+          file.save!
+          return file.id.to_s
+        end
       end
     end
 

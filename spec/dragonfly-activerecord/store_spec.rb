@@ -1,10 +1,16 @@
 require 'spec_helper'
 require 'dragonfly-activerecord/store.rb'
+require 'dragonfly'
 
 describe Dragonfly::ActiveRecord::Store do
-  FakeFile = Struct.new(:data, :meta)
 
-  let(:fake_file) { FakeFile.new data, metadata }
+  let(:fake_file) do
+    Dragonfly::Content.new(
+      nil, # no app
+      Dragonfly::TempObject.new(data),
+      metadata)
+  end
+
   let(:metadata) { {a:1} }
 
   before { prepare_database }
@@ -15,7 +21,7 @@ describe Dragonfly::ActiveRecord::Store do
       returned_data, returned_meta = subject.read(id)
 
       returned_data.length.should == data.length
-      returned_data.should == data
+      returned_data.read.should == data
     end
   end
 

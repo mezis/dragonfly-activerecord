@@ -3,6 +3,7 @@ PATH
   specs:
     dragonfly-activerecord (0.0.2)
       activerecord (>= 3.2.6)
+      dragonfly (>= 1.0.2)
 
 GEM
   remote: http://yarp.dev/
@@ -32,6 +33,9 @@ GEM
       timers (~> 1.1.0)
     coderay (1.1.0)
     diff-lcs (1.2.5)
+    dragonfly (1.0.2)
+      multi_json (~> 1.0)
+      rack
     ffi (1.9.3)
     formatador (0.2.4)
     guard (2.2.5)
@@ -58,6 +62,7 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    rack (1.5.2)
     rake (10.1.1)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
