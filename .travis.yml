@@ -10,8 +10,15 @@ gemfile:
   - gemfiles/rails40.gemfile
 before_install:
   - gem update bundler
-  - bundle install
-bundler_args:
+install:
+  - ./rebund/run download
+  - bundle install --path ../vendor/bundle
+after_script:
+  - ./rebund/run upload
 before_script:
   - psql -c 'create database dar_test;' -U postgres
   - mysql -e 'create database dar_test;'
+env:
+  global:
+    - secure: "hAzED2sL+PgYtqNCd46gxW15+kiMOW5LRHj5oK2zhY6rtU/efQ9hg7zt4h9zjFtk142R3D6XOMqlXAmJ6zZ/mWcd+5qwD52v6Qp/r8jJTFhXmYSIKW2MAKUbK51bxERkN5OUeZx7lLBC4BIImAue+PsTORMHtA2NJSROAnz573Y="
+
