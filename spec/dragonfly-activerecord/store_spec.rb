@@ -21,7 +21,7 @@ describe Dragonfly::ActiveRecord::Store do
       returned_data, returned_meta = subject.read(id)
 
       returned_data.length.should == data.length
-      returned_data.should == data
+      returned_data.read.should == data
     end
   end
 

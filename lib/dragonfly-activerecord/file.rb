@@ -25,7 +25,12 @@ module Dragonfly::ActiveRecord
     end
 
     def data
-      self.chunks.order(:idx).map(&:data).join
+      @_output ||= Tempfile.new('dar', encoding: 'binary').tap do |fd|
+        chunks.order(:ids).find_each(batch_size: 10) do |chunk|
+          fd.write(chunk.data)
+        end
+        fd.rewind
+      end
     end
 
     private
