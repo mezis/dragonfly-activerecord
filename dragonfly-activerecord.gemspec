@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard-rspec'
 
   spec.add_dependency 'activerecord', '>= 3.2.6'
+  spec.add_dependency 'dragonfly',    '>= 1.0.2'
 end
