@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dragonfly-activerecord (0.0.2)
+    dragonfly-activerecord (0.1.0)
       activerecord (>= 3.2.6)
       dragonfly (>= 1.0.2)
 
