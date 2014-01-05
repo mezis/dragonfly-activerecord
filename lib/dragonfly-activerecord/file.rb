@@ -20,6 +20,9 @@ module Dragonfly::ActiveRecord
     # for worst case GZip compression.
     MAX_CHUNK_SIZE = 32_768
 
+    # max number of chunks read at a time
+    MAX_CHUNK_READ = 10
+
     def data=(file)
       @_data = file
     end
@@ -28,10 +31,11 @@ module Dragonfly::ActiveRecord
       @_output ||= Tempfile.new('dar', encoding: 'binary').tap do |fd|
         index = 0
         while true
-          chunk = chunks.where(idx:index).first
-          break if chunk.nil?
-          fd.write(chunk.data)
-          index += 1
+          range = index...(index + MAX_CHUNK_READ)
+          chunklist = chunks.where(idx:range).to_a.sort_by(&:idx)
+          break if chunklist.empty?
+          chunklist.each { |chunk| fd.write(chunk.data) }
+          index += MAX_CHUNK_READ
         end
         fd.rewind
       end
