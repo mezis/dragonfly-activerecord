@@ -13,21 +13,15 @@ module Dragonfly::ActiveRecord
     validates_presence_of :accessed_at
 
     before_validation :set_defaults
-
-    # default_value_for(:metadata) { Hash.new }
-    # default_value_for(:accessed_at) { Time.current }
+    after_save        :build_chunks
 
     # BLOB is typically 65k maximum, but in our case
     # there's a 4/3 overhead for Base64 encoding, and up to 1% overhead
     # for worst case GZip compression.
     MAX_CHUNK_SIZE = 32_768
 
-    def data=(data)
-      self.chunks.each(&:mark_for_destruction)
-      (data.length / MAX_CHUNK_SIZE + 1).times do |index|
-        chunk = data[index * MAX_CHUNK_SIZE, MAX_CHUNK_SIZE]
-        self.chunks.new(data:chunk, idx:index)
-      end
+    def data=(file)
+      @_data = file
     end
 
     def data
@@ -35,6 +29,16 @@ module Dragonfly::ActiveRecord
     end
 
     private
+
+    def build_chunks
+      # require 'pry' ; binding.pry
+      chunks.delete_all
+      index = 0
+      while chunk = @_data.read(MAX_CHUNK_SIZE)
+        chunks.create!(data:chunk, idx:index)
+        index += 1
+      end
+    end
 
     def set_defaults
       self.metadata    ||= Hash.new
