@@ -54,8 +54,7 @@ require 'dragonfly-activerecord/store'
 
 Dragonfly.app.configure do
   # ... your existing configuration here
-  datastore Storage::DataStore.new
-end
+  datastore Dragonfly::ActiveRecord::Store.new
 ```
 
 ... and you're good to go!
