@@ -9,7 +9,7 @@ describe Dragonfly::ActiveRecord::Migration do
   end
 
   it 'is a proper migration' do
-    subject.ancestors.should include(ActiveRecord::Migration)
+    expect(subject.ancestors).to include(ActiveRecord::Migration)
   end
 
   it 'applies cleanly' do
@@ -30,13 +30,13 @@ describe Dragonfly::ActiveRecord::Migration do
     it 'result in a functional chunks model' do
       model_class.table_name = 'storage_chunks'
       model_class.create(file_id: 123, idx: 456, encoded_data: 'foobar')
-      model_class.count.should == 1
+      expect(model_class.count).to eq(1)
     end
     
     it 'result in a functional files model' do
       model_class.table_name = 'storage_files'
       model_class.create(metadata: 'foobar', accessed_at: Time.now)
-      model_class.count.should == 1
+      expect(model_class.count).to eq(1)
     end
   end
 end

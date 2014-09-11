@@ -15,13 +15,13 @@ describe Dragonfly::ActiveRecord::Store do
 
   before { prepare_database }
 
-  share_examples_for 'store and retrieve' do
+  shared_examples_for 'store and retrieve' do
     it 'retrieves the data' do
       id = subject.write(fake_file)
       returned_data, returned_meta = subject.read(id)
 
-      returned_data.length.should == data.length
-      returned_data.read.should == data
+      expect(returned_data.length).to eq(data.length)
+      expect(returned_data.read).to eq(data)
     end
   end
 
@@ -42,6 +42,6 @@ describe Dragonfly::ActiveRecord::Store do
   end
 
   it 'returns nil for missing files' do
-    subject.read('1337').should be_nil
+    expect(subject.read('1337')).to be_nil
   end
 end
